@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Conexión a SQLite3 y mostrar datos de la tabla Juicios</title>
+</head>
+<body>
+  <h1>Datos de la tabla Juicios</h1>
+  <table id="juiciosTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.1/sql.js"></script>
+  <script>
+    // Cargar la base de datos SQLite3
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'embargo.db', true);
+    xhr.responseType = 'arraybuffer';
+
+    xhr.onload = function(e) {
+      var uInt8Array = new Uint8Array(this.response);
+      var db = new SQL.Database(uInt8Array);
+
+      // Ejecutar consulta a la tabla Juicios
+      var query = "SELECT * FROM Juicios";
+      var result = db.exec(query);
+      var rows = result[0].values;
+
+      // Mostrar los datos en la tabla
+      var tableBody = document.getElementById("juiciosTable").getElementsByTagName("tbody")[0];
+      for (var i = 0; i < rows.length; i++) {
+        var row = document.createElement("tr");
+        for (var j = 0; j < rows[i].length; j++) {
+          var cell = document.createElement("td");
+          cell.textContent = rows[i][j];
+          row.appendChild(cell);
+        }
+        tableBody.appendChild(row);
+      }
+    };
+
+    xhr.send();
+  </script>
+</body>
+</html>
