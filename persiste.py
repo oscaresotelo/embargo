@@ -24,49 +24,45 @@ def main():
     st.title("Embargos App")
     
     pregunta = '''
-    usando streamlit, tienes acceso a una base de datos sqlite, deberas conectarte a una base de datos sqlite llamada "embargos.db", deberas trabajar
+    usando streamlit , tienes acceso a una base de datos sqlite, deberas conectarte a una base de datos sqlite llamada "embargos.db", deberas trabajar
     con la tabla "Juicios" que tiene los siguientes campos:
     "id"    INTEGER,
-    "Dni"   INTEGER,
-    "NombreJuicio"  TEXT,
-    "NumerodeExpte" INTEGER,
-    "RadicacionJudicial"    INTEGER,
-    "NumeroOficio"  INTEGER,
-    "NumeroExpteAdministrativo" INTEGER,
-    "MedidaCautelar"    INTEGER,
-    "AclaracionCautelar"    TEXT,
-    "FechaInicio"   DATE,
-    "FechaFin"  DATE,
-    "Observacion"   TEXT,
-    "MontoEmbargo"  REAL,
-    "Sanciones" INTEGER,
-    ES IMPORTANTE QUE GENERES EL CODIGO SE GENERE EN UN SOLO ARCHIVO,  NO COMENTAR EL CODIGO NI EXPLICAR LO QUE HICISTE, el pedido es el siguiente:
+        "Dni"   INTEGER,
+        "NombreJuicio"  TEXT,
+        "NumerodeExpte" INTEGER,
+        "RadicacionJudicial"    INTEGER,
+        "NumeroOficio"  INTEGER,
+        "NumeroExpteAdministrativo" INTEGER,
+        "MedidaCautelar"    INTEGER,
+        "AclaracionCautelar"    TEXT,
+        "FechaInicio"   DATE,
+        "FechaFin"  DATE,
+        "Observacion"   TEXT,
+        "MontoEmbargo"  REAL,
+        "Sanciones" INTEGER,
+        ES IMPORTANTE QUE GENERES EL CODIGO SE GENERE EN UN SOLO ARCHIVO,  NO COMENTAR EL CODIGO NI EXPLICAR LO QUE HICISTE, el pedido es el siguiente:
     '''
     corregir = """corregir el siguiente codigo, IMPORTANTE RECORDAR QUE SE ESTA TRABAJANDO CON EL FRAMEWORK STREAMLIT:
     """
 
-    if "mostrar_dni" not in st.session_state:
-        st.session_state.mostrar_dni = ""
+    # Define st.session_state variables
+    st.session_state.respuesta = ""
+    st.session_state.codigo_corregido = ""
 
-    mostrar_dni = st.text_area("ESCRIBE TU CONSULTA", value=st.session_state.mostrar_dni)
+    # Execute the corrected code outside the main function
+    if st.session_state.codigo_corregido:
+        exec(st.session_state.codigo_corregido, globals())
+
+    mostrar_dni = st.text_area("ESCRIBE TU CONSULTA")
 
     if st.button("Ejecutar"):
         pregunta = pregunta + mostrar_dni
         respuesta = generate_story(pregunta)
         st.write(respuesta)
-        codigo_corregido = extract_python_code(respuesta)
-        st.session_state.mostrar_dni = mostrar_dni  # Guardar el valor actualizado en session_state
 
-        # Ejecutar el código y almacenar la salida generada en una variable
-        output = ""
-        try:
-            exec(codigo_corregido, globals(), {'output': output})
-        except Exception as e:
-            output = f"Error: {e}"
-        
-        # Mostrar la salida generada
-        st.code(codigo_corregido, language="python")
-        st.write(output)
+        # Store values in st.session_state
+        st.session_state.respuesta = respuesta
+        st.session_state.codigo_corregido = extract_python_code(respuesta)
 
 if __name__ == "__main__":
     main()
