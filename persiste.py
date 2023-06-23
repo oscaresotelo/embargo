@@ -62,7 +62,7 @@ def main():
 
         # Store values in st.session_state
         st.session_state.respuesta = respuesta
-        st.session_state.codigo_corregido = extract_python_code(respuesta)
+        
 
 if __name__ == "__main__":
     main()
