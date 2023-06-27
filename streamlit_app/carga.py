@@ -172,7 +172,7 @@ def main():
         Page("tiporadicaciones.py", "Tipos de Radicaciones", ":notebook:"),
         Page("reportedni.py", "Consulta por Dni", ":notebook:"),
         Page("reportes.py", "Consulta Fecha Inicio", ":notebook:"),
-        Page("terminacion.py", "Consulta Beta", ":notebook:"),
+        Page("terminacion.py", "Consulta Beta-AI", ":notebook:"),
 
     ])
     counter = 1
