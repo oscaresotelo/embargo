@@ -3,7 +3,38 @@ import pandas as pd
 import sqlite3
 from fpdf import FPDF
 import base64
-
+hide_streamlit_style = """
+                <style>
+                div[data-testid="stToolbar"] {
+                visibility: hidden;
+                height: 0%;
+                position: fixed;
+                }
+                div[data-testid="stDecoration"] {
+                visibility: hidden;
+                height: 0%;
+                position: fixed;
+                }
+                div[data-testid="stStatusWidget"] {
+                visibility: hidden;
+                height: 0%;
+                position: fixed;
+                }
+                #MainMenu {
+                visibility: hidden;
+                height: 0%;
+                }
+                header {
+                visibility: hidden;
+                height: 0%;
+                }
+                footer {
+                visibility: hidden;
+                height: 0%;
+                }
+                </style>
+                """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 # Función para generar el informe en PDF y obtener el contenido del archivo
 def generate_pdf_report(data):
     pdf = FPDF()
@@ -28,9 +59,10 @@ def generate_pdf_report(data):
 conn = sqlite3.connect("embargos.db")
 
 # Consulta por DNI
-@st.cache_data(persist=True)
+# @st.cache_data(persist=True)
 def get_juicios(dni):
     query = f"SELECT * FROM Juicios WHERE dni = '{dni}'"
+
     return pd.read_sql_query(query, conn)
 
 # Interfaz de usuario con Streamlit
@@ -49,6 +81,7 @@ def main():
         else:
             st.info(f"Se encontraron {len(juicios)} registros para ese DNI.")
             pdf_output = generate_pdf_report(juicios)
+            st.dataframe(juicios)
             st.markdown(get_download_link(pdf_output), unsafe_allow_html=True)
 
 # Función para generar el enlace de descarga
