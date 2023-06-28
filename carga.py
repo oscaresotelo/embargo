@@ -199,7 +199,7 @@ def main():
         Page("tiporadicaciones.py", "Tipos de Radicaciones", ":notebook:"),
         Page("reportedni.py", "Consulta por Dni", ":notebook:"),
         Page("reportes.py", "Consulta Fecha Inicio", ":notebook:"),
-        Page("terminacion.py", "Consulta Beta", ":notebook:"),
+        Page("actualizar.py", "Modificar Datos", ":notebook:"),
 
     ])
     counter = 1
@@ -257,7 +257,7 @@ def main():
                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
                                    (dni, nombre_juicio, num_expte, nominacion_radicacion, num_oficio, num_expte_admin,
                                     medida_cautelar, aclaracion_cautelar, fecha_inicio, fecha_fin, observacion,
-                                    nombre_sanciones, monto_embargo, rad_judicial[0], juzgado_id[1]))
+                                    monto_embargo, nombre_sanciones, rad_judicial[0], juzgado_id[1]))
 
 
                 conn.commit()
