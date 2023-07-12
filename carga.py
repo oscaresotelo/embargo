@@ -4,12 +4,26 @@ import sqlite3
 from sqlite3 import Error
 from streamlit_tags import st_tags
 from st_pages import Page, show_pages, add_page_title
+import base64
 
 conn = sqlite3.connect('embargos.db')
 c = conn.cursor()
+LOGO_IMAGE = "./imagenes/justice.png"
 st.markdown(
     """
     <style>
+        .container {
+        display: flex;
+    }
+    .logo-text {
+        font-weight:700 !important;
+        font-size:50px !important;
+        color: black !important;
+        padding-top: 50px !important;
+    }
+    .logo-img {
+        float:right;
+    }
         div[data-testid="stToolbar"] {
                 visibility: hidden;
                 height: 0%;
@@ -128,10 +142,25 @@ st.markdown(
             border: 1px solid #f5c6cb;
             border-radius: 4px;
         }
+        .container {
+        display: flex;
+    
+    }
     </style>
     """,
     unsafe_allow_html=True,
 )
+st.markdown(
+    f"""
+    <div class="container">
+        <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
+        <p class="logo-text">Juicios-Embargos</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
 
 def create_connection():
     conn = None
@@ -192,7 +221,7 @@ def get_juzgados(conn):
 def main():
 
     # título de la página
-    st.title('Carga de Embargos')
+    
     show_pages([
         Page("carga.py", "Inicio", ":notebook:"),
         Page("tipomedidas.py", "Tipos de Medidas", ":notebook:"),
@@ -200,6 +229,7 @@ def main():
         Page("reportedni.py", "Consulta por Dni", ":notebook:"),
         Page("reportes.py", "Consulta Fecha Inicio", ":notebook:"),
         Page("actualizar.py", "Modificar Datos", ":notebook:"),
+        Page("consultagral.py", "Consulta General", ":notebook:"),
 
     ])
     counter = 1

@@ -1,42 +1,46 @@
 import sqlite3
 import streamlit as st
 import pandas as pd
-
+import base64
 # Conexión a la base de datos SQLite
 conn = sqlite3.connect('embargos.db')
 c = conn.cursor()
-hide_streamlit_style = """
-                <style>
-                div[data-testid="stToolbar"] {
-                visibility: hidden;
-                height: 0%;
-                position: fixed;
-                }
-                div[data-testid="stDecoration"] {
-                visibility: hidden;
-                height: 0%;
-                position: fixed;
-                }
-                div[data-testid="stStatusWidget"] {
-                visibility: hidden;
-                height: 0%;
-                position: fixed;
-                }
-                #MainMenu {
-                visibility: hidden;
-                height: 0%;
-                }
-                header {
-                visibility: hidden;
-                height: 0%;
-                }
-                footer {
-                visibility: hidden;
-                height: 0%;
-                }
-                </style>
-                """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
+LOGO_IMAGE = "./imagenes/justice.png"
+
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+                     .container {
+                display: flex;
+            }
+            .logo-text {
+                font-weight:700 !important;
+                font-size:50px !important;
+                color: black !important;
+                padding-top: 50px !important;
+            }
+            .logo-img {
+                float:right;
+            }
+            </style>
+            """
+st.markdown(hide_st_style, 
+
+    unsafe_allow_html=True)
+st.markdown(
+    f"""
+    <div class="container">
+        <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
+        <h1 style='text-align: center;'>Juicios-Embargos</h1>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # Función para buscar juicios por DNI
 def buscar_por_dni(dni):
     c.execute("SELECT * FROM Juicios WHERE Dni=?", (dni,))
