@@ -63,43 +63,52 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("Actualizacion De Registros")
-# Entrada del número de DNI
-dni = st.sidebar.text_input("Ingrese el número de DNI")
+if "ingreso" not in st.session_state:
+      st.session_state.ingreso = ""
 
-# Botón para buscar el registro
-if st.sidebar.button("Buscar"):
-    resultados = buscar_por_dni(dni)
-    if len(resultados) > 0:
-        df = pd.DataFrame(resultados, columns=["id", "Dni", "NombreJuicio", "NumerodeExpte", "RadicacionJudicial",
-                                               "NumeroOficio", "NumeroExpteAdministrativo", "MedidaCautelar",
-                                               "AclaracionCautelar", "FechaInicio", "FechaFin", "Observacion",
-                                               "MontoEmbargo", "Sanciones", "NominacionRadicacion", "Juzgado"])
+
+if st.session_state.ingreso == "":
+    st.warning("Por favor Ingrese Correctamente")
+ 
+
+else :
+    st.title("Actualizacion De Registros")
+    # Entrada del número de DNI
+    dni = st.sidebar.text_input("Ingrese el número de DNI")
+
+    # Botón para buscar el registro
+    if st.sidebar.button("Buscar"):
+        resultados = buscar_por_dni(dni)
+        if len(resultados) > 0:
+            df = pd.DataFrame(resultados, columns=["id", "Dni", "NombreJuicio", "NumerodeExpte", "RadicacionJudicial",
+                                                   "NumeroOficio", "NumeroExpteAdministrativo", "MedidaCautelar",
+                                                   "AclaracionCautelar", "FechaInicio", "FechaFin", "Observacion",
+                                                   "MontoEmbargo", "Sanciones", "NominacionRadicacion", "Juzgado"])
+            st.dataframe(df)
+        else:
+            st.write("No se encontraron registros con el DNI especificado.")
+
+    # Sección para actualizar un campo del registro
+    id = st.text_input("Ingrese el ID del registro que desea actualizar")
+    campo = st.selectbox("Seleccione el campo a actualizar", ['NombreJuicio', 'NumerodeExpte', 'RadicacionJudicial',
+                                                            'NumeroOficio', 'NumeroExpteAdministrativo', 'MedidaCautelar',
+                                                            'AclaracionCautelar', 'FechaInicio', 'FechaFin', 'Observacion',
+                                                            'Sanciones', 'MontoEmbargo','NominacionRadicacion', 'Juzgado'])
+    valor = st.text_input("Ingrese el nuevo valor")
+
+    if st.button("Guardar"):
+        registros_actualizados = actualizar_registro(id, campo, valor)
+        ver_modificacion = buscar_por_id(id)
+        df = pd.DataFrame(ver_modificacion, columns=["id", "Dni", "NombreJuicio", "NumerodeExpte", "RadicacionJudicial",
+                                                   "NumeroOficio", "NumeroExpteAdministrativo", "MedidaCautelar",
+                                                   "AclaracionCautelar", "FechaInicio", "FechaFin", "Observacion",
+                                                   "MontoEmbargo", "Sanciones", "NominacionRadicacion", "Juzgado"])
         st.dataframe(df)
-    else:
-        st.write("No se encontraron registros con el DNI especificado.")
 
-# Sección para actualizar un campo del registro
-id = st.text_input("Ingrese el ID del registro que desea actualizar")
-campo = st.selectbox("Seleccione el campo a actualizar", ['NombreJuicio', 'NumerodeExpte', 'RadicacionJudicial',
-                                                        'NumeroOficio', 'NumeroExpteAdministrativo', 'MedidaCautelar',
-                                                        'AclaracionCautelar', 'FechaInicio', 'FechaFin', 'Observacion',
-                                                        'Sanciones', 'MontoEmbargo','NominacionRadicacion', 'Juzgado'])
-valor = st.text_input("Ingrese el nuevo valor")
+        if registros_actualizados > 0:
+            st.info("Se actualizó correctamente el registro.")
+        else:
+            st.warning("No se pudo actualizar el registro.")
 
-if st.button("Guardar"):
-    registros_actualizados = actualizar_registro(id, campo, valor)
-    ver_modificacion = buscar_por_id(id)
-    df = pd.DataFrame(ver_modificacion, columns=["id", "Dni", "NombreJuicio", "NumerodeExpte", "RadicacionJudicial",
-                                               "NumeroOficio", "NumeroExpteAdministrativo", "MedidaCautelar",
-                                               "AclaracionCautelar", "FechaInicio", "FechaFin", "Observacion",
-                                               "MontoEmbargo", "Sanciones", "NominacionRadicacion", "Juzgado"])
-    st.dataframe(df)
-
-    if registros_actualizados > 0:
-        st.info("Se actualizó correctamente el registro.")
-    else:
-        st.warning("No se pudo actualizar el registro.")
-
-# Cierre de la conexión a la base de datos
-conn.close()
+    # Cierre de la conexión a la base de datos
+    conn.close()

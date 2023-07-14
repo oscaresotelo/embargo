@@ -117,87 +117,95 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+if "ingreso" not in st.session_state:
+    st.session_state.ingreso = ""
 
-# Página principal
-def main():
-   
-    
 
-    # Obtener todos los juicios
-    juicios = get_all_juicios()
+if st.session_state.ingreso == "":
+    st.warning("Por favor Ingrese Correctamente")
+ 
 
-    # Mostrar los juicios en una tabla
-    # st.title('Juicios Registrados')
-    
-    st.markdown(
-    f"""
-    <div style='text-align: left'>
-        <h1 style='color: black;'>Juicios Registrados</h1>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-    # st.dataframe(juicios)
+else :
+    # Página principal
+    def main():
+       
+        
 
-    # Opciones de filtrado
-    st.sidebar.title('Filtrar Juicios')
+        # Obtener todos los juicios
+        juicios = get_all_juicios()
 
-    # Filtrar por número de expediente
-    numero_expediente = st.sidebar.text_input('Número de Expediente')
-    if st.sidebar.button('Filtrar por Expediente'):
-        juicios_filtrados = get_juicios_by_expediente(numero_expediente)
-        st.subheader(f'Juicios filtrados por Número de Expediente: {numero_expediente}')
-        st.dataframe(juicios_filtrados)
-        st.write("CANTIDAD DE REGISTROS :  " + str(len(juicios_filtrados)))
-        st.markdown(download_link(juicios_filtrados, 'juicios_filtrados_por_expediente'), unsafe_allow_html=True)
+        # Mostrar los juicios en una tabla
+        # st.title('Juicios Registrados')
+        
+        st.markdown(
+        f"""
+        <div style='text-align: left'>
+            <h1 style='color: black;'>Juicios Registrados</h1>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+        # st.dataframe(juicios)
 
-    # Filtrar por localidad del juzgado
-    localidades = st.sidebar.multiselect('Localidad del Juzgado', ('Capital', 'Concepcion', 'Banda Rio Sali', 'Monteros', 'Penales'))
-    if st.sidebar.button('Filtrar por Localidad del Juzgado'):
-        juicios_filtrados = get_juicios_by_localidad(localidades)
-        st.subheader(f'Juicios filtrados por Localidad del Juzgado: {", ".join(localidades)}')
-        st.dataframe(juicios_filtrados)
-        st.write("CANTIDAD DE REGISTROS :  " + str(len(juicios_filtrados)))
-        st.markdown(download_link(juicios_filtrados, 'juicios_filtrados_por_localidad_juzgado'), unsafe_allow_html=True)
+        # Opciones de filtrado
+        st.sidebar.title('Filtrar Juicios')
 
-    # Filtrar por fecha de inicio
-    fecha_inicio = st.sidebar.date_input('Fecha de Inicio')
-    if st.sidebar.button('Filtrar por Fecha de Inicio'):
-        juicios_filtrados = get_juicios_by_fecha_inicio(fecha_inicio)
-        st.subheader(f'Juicios filtrados por Fecha de Inicio: {fecha_inicio}')
-        st.dataframe(juicios_filtrados)
-        st.write("CANTIDAD DE REGISTROS :  " + str(len(juicios_filtrados)))
-        st.markdown(download_link(juicios_filtrados, 'juicios_filtrados_por_fecha_inicio'), unsafe_allow_html=True)
+        # Filtrar por número de expediente
+        numero_expediente = st.sidebar.text_input('Número de Expediente')
+        if st.sidebar.button('Filtrar por Expediente'):
+            juicios_filtrados = get_juicios_by_expediente(numero_expediente)
+            st.subheader(f'Juicios filtrados por Número de Expediente: {numero_expediente}')
+            st.dataframe(juicios_filtrados)
+            st.write("CANTIDAD DE REGISTROS :  " + str(len(juicios_filtrados)))
+            st.markdown(download_link(juicios_filtrados, 'juicios_filtrados_por_expediente'), unsafe_allow_html=True)
 
-    # Filtrar por fecha de fin
-    fecha_fin = st.sidebar.date_input('Fecha de Fin')
-    if st.sidebar.button('Filtrar por Fecha de Fin'):
-        juicios_filtrados = get_juicios_by_fecha_fin(fecha_fin)
-        st.subheader(f'Juicios filtrados por Fecha de Fin: {fecha_fin}')
-        st.dataframe(juicios_filtrados)
-        st.write("CANTIDAD DE REGISTROS :  " + str(len(juicios_filtrados)))
-        st.markdown(download_link(juicios_filtrados, 'juicios_filtrados_por_fecha_fin'), unsafe_allow_html=True)
+        # Filtrar por localidad del juzgado
+        localidades = st.sidebar.multiselect('Localidad del Juzgado', ('Capital', 'Concepcion', 'Banda Rio Sali', 'Monteros', 'Penales'))
+        if st.sidebar.button('Filtrar por Localidad del Juzgado'):
+            juicios_filtrados = get_juicios_by_localidad(localidades)
+            st.subheader(f'Juicios filtrados por Localidad del Juzgado: {", ".join(localidades)}')
+            st.dataframe(juicios_filtrados)
+            st.write("CANTIDAD DE REGISTROS :  " + str(len(juicios_filtrados)))
+            st.markdown(download_link(juicios_filtrados, 'juicios_filtrados_por_localidad_juzgado'), unsafe_allow_html=True)
 
-    # Filtrar entre dos fechas de inicio
-    fecha_inicio_1 = st.sidebar.date_input('Fecha de Inicio 1')
-    fecha_inicio_2 = st.sidebar.date_input('Fecha de Inicio 2')
-    if st.sidebar.button('Filtrar entre Fechas de Inicio'):
-        juicios_filtrados = get_juicios_between_fechas_inicio(fecha_inicio_1, fecha_inicio_2)
-        st.subheader(f'Juicios filtrados entre Fechas de Inicio: {fecha_inicio_1} y {fecha_inicio_2}')
-        st.dataframe(juicios_filtrados)
-        st.write("CANTIDAD DE REGISTROS :  " + str(len(juicios_filtrados)))
-        st.markdown(download_link(juicios_filtrados, 'juicios_filtrados_entre_fechas_inicio'), unsafe_allow_html=True)
+        # Filtrar por fecha de inicio
+        fecha_inicio = st.sidebar.date_input('Fecha de Inicio')
+        if st.sidebar.button('Filtrar por Fecha de Inicio'):
+            juicios_filtrados = get_juicios_by_fecha_inicio(fecha_inicio)
+            st.subheader(f'Juicios filtrados por Fecha de Inicio: {fecha_inicio}')
+            st.dataframe(juicios_filtrados)
+            st.write("CANTIDAD DE REGISTROS :  " + str(len(juicios_filtrados)))
+            st.markdown(download_link(juicios_filtrados, 'juicios_filtrados_por_fecha_inicio'), unsafe_allow_html=True)
 
-    # Filtrar entre dos fechas de fin
-    fecha_fin_1 = st.sidebar.date_input('Fecha de Fin 1')
-    fecha_fin_2 = st.sidebar.date_input('Fecha de Fin 2')
-    if st.sidebar.button('Filtrar entre Fechas de Fin'):
-        juicios_filtrados = get_juicios_between_fechas_fin(fecha_fin_1, fecha_fin_2)
-        st.subheader(f'Juicios filtrados entre Fechas de Fin: {fecha_fin_1} y {fecha_fin_2}')
-        st.dataframe(juicios_filtrados)
-        st.write("CANTIDAD DE REGISTROS :  " + str(len(juicios_filtrados)))
-        st.markdown(download_link(juicios_filtrados, 'juicios_filtrados_entre_fechas_fin'), unsafe_allow_html=True)
+        # Filtrar por fecha de fin
+        fecha_fin = st.sidebar.date_input('Fecha de Fin')
+        if st.sidebar.button('Filtrar por Fecha de Fin'):
+            juicios_filtrados = get_juicios_by_fecha_fin(fecha_fin)
+            st.subheader(f'Juicios filtrados por Fecha de Fin: {fecha_fin}')
+            st.dataframe(juicios_filtrados)
+            st.write("CANTIDAD DE REGISTROS :  " + str(len(juicios_filtrados)))
+            st.markdown(download_link(juicios_filtrados, 'juicios_filtrados_por_fecha_fin'), unsafe_allow_html=True)
 
-# Ejecutar la aplicación
-if __name__ == '__main__':
-    main()
+        # Filtrar entre dos fechas de inicio
+        fecha_inicio_1 = st.sidebar.date_input('Fecha de Inicio 1')
+        fecha_inicio_2 = st.sidebar.date_input('Fecha de Inicio 2')
+        if st.sidebar.button('Filtrar entre Fechas de Inicio'):
+            juicios_filtrados = get_juicios_between_fechas_inicio(fecha_inicio_1, fecha_inicio_2)
+            st.subheader(f'Juicios filtrados entre Fechas de Inicio: {fecha_inicio_1} y {fecha_inicio_2}')
+            st.dataframe(juicios_filtrados)
+            st.write("CANTIDAD DE REGISTROS :  " + str(len(juicios_filtrados)))
+            st.markdown(download_link(juicios_filtrados, 'juicios_filtrados_entre_fechas_inicio'), unsafe_allow_html=True)
+
+        # Filtrar entre dos fechas de fin
+        fecha_fin_1 = st.sidebar.date_input('Fecha de Fin 1')
+        fecha_fin_2 = st.sidebar.date_input('Fecha de Fin 2')
+        if st.sidebar.button('Filtrar entre Fechas de Fin'):
+            juicios_filtrados = get_juicios_between_fechas_fin(fecha_fin_1, fecha_fin_2)
+            st.subheader(f'Juicios filtrados entre Fechas de Fin: {fecha_fin_1} y {fecha_fin_2}')
+            st.dataframe(juicios_filtrados)
+            st.write("CANTIDAD DE REGISTROS :  " + str(len(juicios_filtrados)))
+            st.markdown(download_link(juicios_filtrados, 'juicios_filtrados_entre_fechas_fin'), unsafe_allow_html=True)
+
+    # Ejecutar la aplicación
+    if __name__ == '__main__':
+        main()

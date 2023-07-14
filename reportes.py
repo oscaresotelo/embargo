@@ -67,37 +67,46 @@ def get_juicios(start_date, end_date):
     query = f"SELECT * FROM Juicios WHERE FechaInicio BETWEEN '{start_date}' AND '{end_date}'"
     return pd.read_sql_query(query, conn)
 
+if "ingreso" not in st.session_state:
+      st.session_state.ingreso = ""
+
+
+if st.session_state.ingreso == "":
+    st.warning("Por favor Ingrese Correctamente")
+ 
+
+else :
 # Interfaz de usuario con Streamlit
-def main():
+    def main():
 
-    st.markdown("<h1 style='text-align: center;'>CONSULTAS</h1>", unsafe_allow_html=True)
-    st.markdown("<h1 style='text-align: center;'>Embargos por Fecha de Inicio</h1>", unsafe_allow_html=True)
-    
+        st.markdown("<h1 style='text-align: center;'>CONSULTAS</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align: center;'>Embargos por Fecha de Inicio</h1>", unsafe_allow_html=True)
+        
 
-    # Rango de fechas
-    start_date = st.date_input("Fecha de inicio")
-    end_date = st.date_input("Fecha de fin")
+        # Rango de fechas
+        start_date = st.date_input("Fecha de inicio")
+        end_date = st.date_input("Fecha de fin")
 
-    if start_date > end_date:
-        st.error("La fecha de inicio debe ser anterior a la fecha de fin.")
-        return
+        if start_date > end_date:
+            st.error("La fecha de inicio debe ser anterior a la fecha de fin.")
+            return
 
-    # Consulta y generación del informe
-    if st.button("Generar informe"):
-        juicios = get_juicios(start_date, end_date)
-        if juicios.empty:
-            st.info("No se encontraron registros en ese rango de fechas.")
-        else:
-            st.info(f"Se encontraron {len(juicios)} registros en ese rango de fechas.")
-            pdf_output = generate_pdf_report(juicios)
-            st.dataframe(juicios)
-            st.markdown(get_download_link(pdf_output), unsafe_allow_html=True)
+        # Consulta y generación del informe
+        if st.button("Generar informe"):
+            juicios = get_juicios(start_date, end_date)
+            if juicios.empty:
+                st.info("No se encontraron registros en ese rango de fechas.")
+            else:
+                st.info(f"Se encontraron {len(juicios)} registros en ese rango de fechas.")
+                pdf_output = generate_pdf_report(juicios)
+                st.dataframe(juicios)
+                st.markdown(get_download_link(pdf_output), unsafe_allow_html=True)
 
-# Función para generar el enlace de descarga
-def get_download_link(file_content):
-    b64 = base64.b64encode(file_content).decode()
-    href = f'<a href="data:application/pdf;base64,{b64}" download="reporte_embargos.pdf">Descargar informe PDF</a>'
-    return href
+    # Función para generar el enlace de descarga
+    def get_download_link(file_content):
+        b64 = base64.b64encode(file_content).decode()
+        href = f'<a href="data:application/pdf;base64,{b64}" download="reporte_embargos.pdf">Descargar informe PDF</a>'
+        return href
 
-if __name__ == "__main__":
-    main()
+    if __name__ == "__main__":
+        main()

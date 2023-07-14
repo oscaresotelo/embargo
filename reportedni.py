@@ -67,31 +67,39 @@ def get_juicios(dni):
     query = f"SELECT * FROM Juicios WHERE dni = '{dni}'"
 
     return pd.read_sql_query(query, conn)
+if "ingreso" not in st.session_state:
+      st.session_state.ingreso = ""
 
-# Interfaz de usuario con Streamlit
-def main():
-    st.markdown("<h1 style='text-align: center;'>CONSULTAS</h1>", unsafe_allow_html=True)
-    st.markdown("<h1 style='text-align: center;'>Embargos por DNI</h1>", unsafe_allow_html=True)
 
-    # Campo DNI
-    dni = st.text_input("Ingrese el DNI")
+if st.session_state.ingreso == "":
+    st.warning("Por favor Ingrese Correctamente")
+ 
 
-    # Consulta y generación del informe
-    if st.button("Generar informe"):
-        juicios = get_juicios(dni)
-        if juicios.empty:
-            st.info("No se encontraron registros para ese DNI.")
-        else:
-            st.info(f"Se encontraron {len(juicios)} registros para ese DNI.")
-            pdf_output = generate_pdf_report(juicios)
-            st.dataframe(juicios)
-            st.markdown(get_download_link(pdf_output), unsafe_allow_html=True)
+else :
+    # Interfaz de usuario con Streamlit
+    def main():
+        st.markdown("<h1 style='text-align: center;'>CONSULTAS</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align: center;'>Embargos por DNI</h1>", unsafe_allow_html=True)
 
-# Función para generar el enlace de descarga
-def get_download_link(file_content):
-    b64 = base64.b64encode(file_content).decode()
-    href = f'<a href="data:application/pdf;base64,{b64}" download="reporte_embargos.pdf">Descargar informe PDF</a>'
-    return href
+        # Campo DNI
+        dni = st.text_input("Ingrese el DNI")
 
-if __name__ == "__main__":
-    main()
+        # Consulta y generación del informe
+        if st.button("Generar informe"):
+            juicios = get_juicios(dni)
+            if juicios.empty:
+                st.info("No se encontraron registros para ese DNI.")
+            else:
+                st.info(f"Se encontraron {len(juicios)} registros para ese DNI.")
+                pdf_output = generate_pdf_report(juicios)
+                st.dataframe(juicios)
+                st.markdown(get_download_link(pdf_output), unsafe_allow_html=True)
+
+    # Función para generar el enlace de descarga
+    def get_download_link(file_content):
+        b64 = base64.b64encode(file_content).decode()
+        href = f'<a href="data:application/pdf;base64,{b64}" download="reporte_embargos.pdf">Descargar informe PDF</a>'
+        return href
+
+        if __name__ == "__main__":
+            main()

@@ -217,89 +217,99 @@ def get_juzgados(conn):
     cursor.execute("SELECT Localidad FROM Juzgados")
     juzgados = cursor.fetchall()
     return [s[0] for s in juzgados]
+if "ingreso" not in st.session_state:
+      st.session_state.ingreso = ""
 
-def main():
 
-    # título de la página
-    
-    show_pages([
-        Page("carga.py", "Inicio", ":notebook:"),
-        Page("tipomedidas.py", "Tipos de Medidas", ":notebook:"),
-        Page("tiporadicaciones.py", "Tipos de Radicaciones", ":notebook:"),
-        Page("reportedni.py", "Consulta por Dni", ":notebook:"),
-        Page("reportes.py", "Consulta Fecha Inicio", ":notebook:"),
-        Page("actualizar.py", "Modificar Datos", ":notebook:"),
-        Page("consultagral.py", "Consulta General", ":notebook:"),
+if st.session_state.ingreso == "":
+    st.warning("Por favor Ingrese Correctamente")
+ 
 
-    ])
-    counter = 1
-    c.execute("SELECT id, Localidad FROM Juzgados")
-    juzgados_data = c.fetchall()
-    juzgado_id = st.selectbox("Selecciona un juzgado", juzgados_data, format_func=lambda x: x[1])
-            # juzgado_id = st.selectbox(label='NombreJuzgado', options=juzgados_options)
-            
-   
-    c.execute("SELECT NombreRadicacion FROM Radicacion WHERE Juzgado = ?", (juzgado_id[0],))
-    radicaciones_data = c.fetchall()
-    rad_judicial = st.selectbox("Selecciona una radicación", radicaciones_data, format_func=lambda x: x[0])
+else :
 
-    while True:
-        contenedor = st.empty()
+    def main():
         
-                
+        # título de la página
         
-    # crear el formulario
-        with contenedor.form(key=f'my_form_{counter}'):
-            # campos del formulario
-            dni = st.number_input(label='Dni', value=0)
-            num_expte = st.number_input(label='NumerodeExpte', value=0)
-            num_oficio = st.number_input(label='NumeroOficio', value=0)
-            medida_options = get_medidas(create_connection())
-            medida_cautelar = st.selectbox(label='MedidaCautelar', options=medida_options)
-            fecha_inicio = st.date_input(label='FechaInicio')
-            observacion = st.text_area(label='Observacion', height=300)
-            nombre_juicio = st.text_input(label='NombreJuicio')
-            radicacion_options = get_radicacion(create_connection())
-            juzgados_options =  get_juzgados(create_connection())
-            nominacion_radicacion = st.text_input(label="Nominacion Radicacion")
+        # show_pages([
+        #     Page("inicio.py", "Inicio", ":notebook:"),
+        #     Page("carga.py", "Carga", ":notebook:"),
+        #     Page("tipomedidas.py", "Tipos de Medidas", ":notebook:"),
+        #     Page("tiporadicaciones.py", "Tipos de Radicaciones", ":notebook:"),
+        #     Page("reportedni.py", "Consulta por Dni", ":notebook:"),
+        #     Page("reportes.py", "Consulta Fecha Inicio", ":notebook:"),
+        #     Page("actualizar.py", "Modificar Datos", ":notebook:"),
+        #     Page("consultagral.py", "Consulta General", ":notebook:"),
 
-           
-            num_expte_admin = st.number_input(label='NumeroExpteAdministrativo', value=0)
-            aclaracion_cautelar = st.text_input(label='AclaracionCautelar')
-            fecha_fin = st.date_input(label='FechaFin')
-            sanciones_options = get_sanciones(create_connection())
-            nombre_sanciones = st.selectbox(label='NombreSanciones', options=sanciones_options)
-            monto_embargo = st.number_input(label='MontoEmbargo')
-            
-
-            # botón para guardar los datos
-            submitted = st.form_submit_button('Guardar Datos')
-            if submitted:
-                conn = create_connection()
-                create_table(conn)
-
-                cursor = conn.cursor()
+        # ])
+        counter = 1
+        c.execute("SELECT id, Localidad FROM Juzgados")
+        juzgados_data = c.fetchall()
+        juzgado_id = st.selectbox("Selecciona un juzgado", juzgados_data, format_func=lambda x: x[1])
+                # juzgado_id = st.selectbox(label='NombreJuzgado', options=juzgados_options)
                 
-                cursor.execute('''INSERT INTO Juicios 
-                                  (Dni, NombreJuicio, NumerodeExpte, RadicacionJudicial, NumeroOficio, 
-                                   NumeroExpteAdministrativo, MedidaCautelar, AclaracionCautelar, FechaInicio, 
-                                   FechaFin, Observacion, Sanciones, MontoEmbargo, NominacionRadicacion, Juzgado) 
-                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                                   (dni, nombre_juicio, num_expte, nominacion_radicacion, num_oficio, num_expte_admin,
-                                    medida_cautelar, aclaracion_cautelar, fecha_inicio, fecha_fin, observacion,
-                                    monto_embargo, nombre_sanciones, rad_judicial[0], juzgado_id[1]))
+       
+        c.execute("SELECT NombreRadicacion FROM Radicacion WHERE Juzgado = ?", (juzgado_id[0],))
+        radicaciones_data = c.fetchall()
+        rad_judicial = st.selectbox("Selecciona una radicación", radicaciones_data, format_func=lambda x: x[0])
+
+        while True:
+            contenedor = st.empty()
+            
+                    
+            
+        # crear el formulario
+            with contenedor.form(key=f'my_form_{counter}'):
+                # campos del formulario
+                dni = st.number_input(label='Dni', value=0)
+                num_expte = st.number_input(label='NumerodeExpte', value=0)
+                num_oficio = st.number_input(label='NumeroOficio', value=0)
+                medida_options = get_medidas(create_connection())
+                medida_cautelar = st.selectbox(label='MedidaCautelar', options=medida_options)
+                fecha_inicio = st.date_input(label='FechaInicio')
+                observacion = st.text_area(label='Observacion', height=300)
+                nombre_juicio = st.text_input(label='NombreJuicio')
+                radicacion_options = get_radicacion(create_connection())
+                juzgados_options =  get_juzgados(create_connection())
+                nominacion_radicacion = st.text_input(label="Nominacion Radicacion")
+
+               
+                num_expte_admin = st.number_input(label='NumeroExpteAdministrativo', value=0)
+                aclaracion_cautelar = st.text_input(label='AclaracionCautelar')
+                fecha_fin = st.date_input(label='FechaFin')
+                sanciones_options = get_sanciones(create_connection())
+                nombre_sanciones = st.selectbox(label='NombreSanciones', options=sanciones_options)
+                monto_embargo = st.number_input(label='MontoEmbargo')
+                
+
+                # botón para guardar los datos
+                submitted = st.form_submit_button('Guardar Datos')
+                if submitted:
+                    conn = create_connection()
+                    create_table(conn)
+
+                    cursor = conn.cursor()
+                    
+                    cursor.execute('''INSERT INTO Juicios 
+                                      (Dni, NombreJuicio, NumerodeExpte, RadicacionJudicial, NumeroOficio, 
+                                       NumeroExpteAdministrativo, MedidaCautelar, AclaracionCautelar, FechaInicio, 
+                                       FechaFin, Observacion, Sanciones, MontoEmbargo, NominacionRadicacion, Juzgado) 
+                                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                                       (dni, nombre_juicio, num_expte, nominacion_radicacion, num_oficio, num_expte_admin,
+                                        medida_cautelar, aclaracion_cautelar, fecha_inicio, fecha_fin, observacion,
+                                        monto_embargo, nombre_sanciones, rad_judicial[0], juzgado_id[1]))
 
 
-                conn.commit()
-                cursor.close()
-                conn.close()
+                    conn.commit()
+                    cursor.close()
+                    conn.close()
 
-                st.success('Datos guardados exitosamente!')
-                contenedor.empty()
-                counter += 1  # Incrementar el contador para la siguiente iteración
+                    st.success('Datos guardados exitosamente!')
+                    contenedor.empty()
+                    counter += 1  # Incrementar el contador para la siguiente iteración
 
-                continue
-        break
+                    continue
+            break
 
-if __name__ == '__main__':
-    main()
+    if __name__ == '__main__':
+        main()
