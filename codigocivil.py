@@ -55,7 +55,7 @@ bard = Bard(timeout=30, session=session)  # Set timeout in seconds
 
 
 
-contexto = ", segun el nuevo CODIGO CIVIL Y COMERCIAL DE LA NACION ARGENTINA QUE ENTRO EN VIGENCIA EN EL  año 2015, Ley 26.994, y mostrar textualmente el articulo y numero de articulo  "
+contexto = ", segun el nuevo CODIGO CIVIL Y COMERCIAL DE LA NACION ARGENTINA QUE ENTRO EN VIGENCIA EN EL  año 2015, Ley 26.994, y mostrar textualmente y de forma exacta el articulo y numero de articulo al que hacen referencia "
 
 
 

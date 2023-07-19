@@ -101,5 +101,5 @@ else :
         href = f'<a href="data:application/pdf;base64,{b64}" download="reporte_embargos.pdf">Descargar informe PDF</a>'
         return href
 
-        if __name__ == "__main__":
-            main()
+    if __name__ == "__main__":
+        main()
