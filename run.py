@@ -18,14 +18,42 @@
 # print(response['content'])
 
 
+# import asyncio
+# import os
+# from sydney import SydneyClient
+# import pandas as pd 
+
+# df = pd.read_csv("maestro.csv")
+# resultado = df[df["DNI"] == 40695989]
+# prompt = str(resultado)
+
+
+    
+# os.environ["BING_U_COOKIE"] = "<your-cookie>"
+
+
+
+# # print(pregunta)
+# # respuesta = asyncio.run(main(pregunta))
+# # print(respuesta)
+
+# pregunta = 'escribir una nota informando al señor javier que es gerente comercial la situacion de los vencimientos de la tarjeta de un cliente, la informacion no debe referirse a deudas: ' + prompt
+# async def main(pregunta) -> None:
+#     async with SydneyClient() as sydney:
+#         response = await sydney.compose(pregunta, format="email")
+#         print(response)
+   
+
+# # if __name__ == "__main__":
+# #     asyncio.run(main())
+# pregunta = 'necesito que actues como oficinista , escribir una nota informando al gerente comercial la siguiente situacion ' + prompt
+# asyncio.run(main(pregunta))
+
 import asyncio
 import os
 from sydney import SydneyClient
 import pandas as pd 
 
-df = pd.read_csv("maestro.csv")
-resultado = df[df["DNI"] == 40695989]
-prompt = str(resultado)
 
 
     
@@ -37,14 +65,19 @@ os.environ["BING_U_COOKIE"] = "<your-cookie>"
 # respuesta = asyncio.run(main(pregunta))
 # print(respuesta)
 
-pregunta = 'escribir una nota informando al señor javier que es gerente comercial la situacion de los vencimientos de la tarjeta de un cliente, la informacion no debe referirse a deudas: ' + prompt
+
+# async def main(pregunta) -> None:
+#     async with SydneyClient() as sydney:
+#         response = await sydney.compose(pregunta , length= "long", tone= "informational")
+#         print(response)
 async def main(pregunta) -> None:
     async with SydneyClient() as sydney:
-        response = await sydney.compose(pregunta, format="email")
+        response = await sydney.ask(pregunta)
         print(response)
-   
 
 # if __name__ == "__main__":
 #     asyncio.run(main())
-pregunta = 'necesito que actues como oficinista , escribir una nota informando al gerente comercial la siguiente situacion ' + prompt
+pregunta = """ 
+que dice el articulo 16 del codigo civil y comercial argentino
+"""
 asyncio.run(main(pregunta))

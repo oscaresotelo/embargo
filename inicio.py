@@ -59,6 +59,7 @@ def login():
               Page("reportes.py", "Consulta Fecha Inicio", ":notebook:"),
               Page("actualizar.py", "Modificar Datos", ":notebook:"),
               Page("consultagral.py", "Consulta General", ":notebook:"),
+              Page("codigocivil.py", "Consulta Codigo Civil", ":notebook:"),
 
           ])
     
