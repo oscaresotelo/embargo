@@ -38,7 +38,7 @@ if st.button('Buscar'):
         if "juicios" not in st.session_state:
             st.session_state.juicios = ""
         juicios = buscar_juicios_por_dni(dni)
-        df = pd.DataFrame(juicios, columns=["id", "Dni", "NombreJuicio", "NumerodeExpte", "RadicacionJudicial", "NumeroOficio", "NumeroExpteAdministrativo", "MedidaCautelar", "AclaracionCautelar", "FechaInicio", "FechaFin", "Observacion", "MontoEmbargo", "Sanciones", "NominacionRadicacion", "Juzgado"])
+        df = pd.DataFrame(juicios, columns=["id", "Dni", "NombreJuicio", "NumerodeExpte", "RadicacionJudicial", "NumeroOficio", "NumeroExpteAdministrativo", "MedidaCautelar", "AclaracionCautelar", "FechaInicio", "FechaFin", "Observacion", "MontoEmbargo", "Sanciones", "NominacionRadicacion", "Juzgado", "FechaUltimaNotificacion","FechaProximaNotificacion","Finalizado"])
         st.session_state.juicios = df
         
 gd = GridOptionsBuilder.from_dataframe(st.session_state.juicios)
