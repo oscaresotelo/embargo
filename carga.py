@@ -186,7 +186,7 @@ def create_table(conn):
                                             NumeroExpteAdministrativo INTEGER,
                                             MedidaCautelar INTEGER,
                                             AclaracionCautelar TEXT,
-                                            FechaInicio DATE,
+                                            FechaInicioexpediente DATE,
                                             FechaFin DATE,
                                             Observacion TEXT,
                                             MontoEmbargo REAL
@@ -292,8 +292,8 @@ else :
                     
                     cursor.execute('''INSERT INTO Juicios 
                                       (Dni, NombreJuicio, NumerodeExpte, RadicacionJudicial, NumeroOficio, 
-                                       NumeroExpteAdministrativo, MedidaCautelar, AclaracionCautelar, FechaInicio, 
-                                       FechaFin, Observacion, Sanciones, MontoEmbargo, NominacionRadicacion, Juzgado) 
+                                       NumeroExpteAdministrativo, MedidaCautelar, AclaracionCautelar, FechaInicioexpediente, 
+                                       FechaFin, Observacion, MontoEmbargo, Sanciones, NominacionRadicacion, Juzgado) 
                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
                                        (dni, nombre_juicio, num_expte, nominacion_radicacion, num_oficio, num_expte_admin,
                                         medida_cautelar, aclaracion_cautelar, fecha_inicio, fecha_fin, observacion,

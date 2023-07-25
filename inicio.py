@@ -6,6 +6,7 @@ import base64
 import pandas as pd 
 from datetime import date, timedelta
 from notificacion import notif 
+import time
 
 
 # Connect to the SQLite database
@@ -79,6 +80,8 @@ if st.session_state.ingreso == "ok":
     if st.button("Salir"):
         del st.session_state.ingreso
         st.info("Sesión cerrada exitosamente")
+        time.sleep(2)
+        st.experimental_rerun()
         
 else:
     st.header("Iniciar sesión")
