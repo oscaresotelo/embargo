@@ -5,6 +5,7 @@ from sqlite3 import Error
 from streamlit_tags import st_tags
 from st_pages import Page, show_pages, add_page_title
 import base64
+from datetime import timedelta
 
 conn = sqlite3.connect('embargos.db')
 c = conn.cursor()
@@ -187,7 +188,7 @@ def create_table(conn):
                                             MedidaCautelar INTEGER,
                                             AclaracionCautelar TEXT,
                                             FechaInicioexpediente DATE,
-                                            FechaFin DATE,
+                                            FechaInicioCumplimientoMedida DATE,
                                             Observacion TEXT,
                                             MontoEmbargo REAL
                                         )''')
@@ -229,19 +230,7 @@ else :
 
     def main():
         
-        # título de la página
-        
-        # show_pages([
-        #     Page("inicio.py", "Inicio", ":notebook:"),
-        #     Page("carga.py", "Carga", ":notebook:"),
-        #     Page("tipomedidas.py", "Tipos de Medidas", ":notebook:"),
-        #     Page("tiporadicaciones.py", "Tipos de Radicaciones", ":notebook:"),
-        #     Page("reportedni.py", "Consulta por Dni", ":notebook:"),
-        #     Page("reportes.py", "Consulta Fecha Inicio", ":notebook:"),
-        #     Page("actualizar.py", "Modificar Datos", ":notebook:"),
-        #     Page("consultagral.py", "Consulta General", ":notebook:"),
-
-        # ])
+      
         counter = 1
         c.execute("SELECT id, Localidad FROM Juzgados")
         juzgados_data = c.fetchall()
@@ -266,7 +255,7 @@ else :
                 num_oficio = st.number_input(label='NumeroOficio', value=0)
                 medida_options = get_medidas(create_connection())
                 medida_cautelar = st.selectbox(label='MedidaCautelar', options=medida_options)
-                fecha_inicio = st.date_input(label='FechaInicio')
+                fecha_inicio = st.date_input(label='Fecha Inicio Cumplimiento Medida')
                 observacion = st.text_area(label='Observacion', height=300)
                 nombre_juicio = st.text_input(label='NombreJuicio')
                 radicacion_options = get_radicacion(create_connection())
@@ -285,6 +274,7 @@ else :
                 # botón para guardar los datos
                 submitted = st.form_submit_button('Guardar Datos')
                 if submitted:
+                    fecha_proxima_notificacion = fecha_inicio + timedelta(days=30)
                     conn = create_connection()
                     create_table(conn)
 
@@ -293,11 +283,11 @@ else :
                     cursor.execute('''INSERT INTO Juicios 
                                       (Dni, NombreJuicio, NumerodeExpte, RadicacionJudicial, NumeroOficio, 
                                        NumeroExpteAdministrativo, MedidaCautelar, AclaracionCautelar, FechaInicioexpediente, 
-                                       FechaFin, Observacion, MontoEmbargo, Sanciones, NominacionRadicacion, Juzgado) 
-                                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                                       FechaInicioCumplimientoMedida, Observacion, MontoEmbargo, Sanciones, NominacionRadicacion, Juzgado,FechaProximaNotificacion) 
+                                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)''',
                                        (dni, nombre_juicio, num_expte, nominacion_radicacion, num_oficio, num_expte_admin,
                                         medida_cautelar, aclaracion_cautelar, fecha_inicio, fecha_fin, observacion,
-                                        monto_embargo, nombre_sanciones, rad_judicial[0], juzgado_id[1]))
+                                        monto_embargo, nombre_sanciones, rad_judicial[0], juzgado_id[1],fecha_proxima_notificacion))
 
 
                     conn.commit()
