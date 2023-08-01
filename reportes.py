@@ -64,7 +64,7 @@ conn = sqlite3.connect("embargos.db")
 # Consulta de registros entre dos fechas
 
 def get_juicios(start_date, end_date):
-    query = f"SELECT * FROM Juicios WHERE FechaInicio BETWEEN '{start_date}' AND '{end_date}'"
+    query = f"SELECT * FROM Juicios WHERE FechaInicioexpediente BETWEEN '{start_date}' AND '{end_date}'"
     return pd.read_sql_query(query, conn)
 
 if "ingreso" not in st.session_state:

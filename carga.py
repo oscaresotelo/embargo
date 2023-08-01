@@ -255,7 +255,7 @@ else :
                 num_oficio = st.number_input(label='NumeroOficio', value=0)
                 medida_options = get_medidas(create_connection())
                 medida_cautelar = st.selectbox(label='MedidaCautelar', options=medida_options)
-                fecha_inicio = st.date_input(label='Fecha Inicio Cumplimiento Medida')
+                fecha_inicio = st.date_input(label='Fecha Inicio Expediente')
                 observacion = st.text_area(label='Observacion', height=300)
                 nombre_juicio = st.text_input(label='NombreJuicio')
                 radicacion_options = get_radicacion(create_connection())
@@ -265,7 +265,7 @@ else :
                
                 num_expte_admin = st.number_input(label='NumeroExpteAdministrativo', value=0)
                 aclaracion_cautelar = st.text_input(label='AclaracionCautelar')
-                fecha_fin = st.date_input(label='FechaFin')
+                fecha_fin = st.date_input(label='Fecha Inicio Cumplimiento de Medida')
                 sanciones_options = get_sanciones(create_connection())
                 nombre_sanciones = st.selectbox(label='NombreSanciones', options=sanciones_options)
                 monto_embargo = st.number_input(label='MontoEmbargo')

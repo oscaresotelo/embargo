@@ -15,7 +15,7 @@ def buscar_articulo(articulo_numero):
 
 st.title('Búsqueda de Artículo')
 
-numero_articulo = st.number_input('Ingrese el número de artículo:', min_value=1, value=1, step=1)
+numero_articulo = st.number_input('Ingrese el número de artículo:', min_value=1, value=0, step=1)
 articulo_encontrado = buscar_articulo(numero_articulo)
 
 if articulo_encontrado:
