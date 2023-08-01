@@ -46,28 +46,28 @@ def get_juicios_by_localidad(localidades):
 
 # Consulta los registros filtrados por fecha de inicio
 def get_juicios_by_fecha_inicio(fecha_inicio):
-    query = f"SELECT * FROM Juicios WHERE FechaInicio = '{fecha_inicio}'"
+    query = f"SELECT * FROM Juicios WHERE FechaInicioexpediente = '{fecha_inicio}'"
     df = run_query(query)
     df['Cantidad de Registros'] = len(df)  # Actualizar la columna con la cantidad de registros
     return df
 
 # Consulta los registros filtrados por fecha de fin
 def get_juicios_by_fecha_fin(fecha_fin):
-    query = f"SELECT * FROM Juicios WHERE FechaFin = '{fecha_fin}'"
+    query = f"SELECT * FROM Juicios WHERE FechaInicioCumplimientoMedida = '{fecha_fin}'"
     df = run_query(query)
     df['Cantidad de Registros'] = len(df)  # Actualizar la columna con la cantidad de registros
     return df
 
 # Consulta los registros filtrados entre dos fechas de inicio
 def get_juicios_between_fechas_inicio(fecha_inicio_1, fecha_inicio_2):
-    query = f"SELECT * FROM Juicios WHERE FechaInicio BETWEEN '{fecha_inicio_1}' AND '{fecha_inicio_2}'"
+    query = f"SELECT * FROM Juicios WHERE FechaInicioexpediente BETWEEN '{fecha_inicio_1}' AND '{fecha_inicio_2}'"
     df = run_query(query)
     df['Cantidad de Registros'] = len(df)  # Actualizar la columna con la cantidad de registros
     return df
 
 # Consulta los registros filtrados entre dos fechas de fin
 def get_juicios_between_fechas_fin(fecha_fin_1, fecha_fin_2):
-    query = f"SELECT * FROM Juicios WHERE FechaFin BETWEEN '{fecha_fin_1}' AND '{fecha_fin_2}'"
+    query = f"SELECT * FROM Juicios WHERE FechaInicioCumplimientoMedida BETWEEN '{fecha_fin_1}' AND '{fecha_fin_2}'"
     df = run_query(query)
     df['Cantidad de Registros'] = len(df)  # Actualizar la columna con la cantidad de registros
     return df
