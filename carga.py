@@ -183,7 +183,7 @@ def create_table(conn):
                                             NombreJuicio TEXT,
                                             NumerodeExpte INTEGER,
                                             RadicacionJudicial INTEGER,
-                                            NumeroOficio INTEGER,
+                                            NumeroOficio TEXT,
                                             NumeroExpteAdministrativo INTEGER,
                                             MedidaCautelar INTEGER,
                                             AclaracionCautelar TEXT,
@@ -252,7 +252,7 @@ else :
                 # campos del formulario
                 dni = st.number_input(label='Dni', value=0)
                 num_expte = st.number_input(label='NumerodeExpte', value=0)
-                num_oficio = st.number_input(label='NumeroOficio', value=0)
+                num_oficio = st.text_input("Numero de Oficio")
                 medida_options = get_medidas(create_connection())
                 medida_cautelar = st.selectbox(label='MedidaCautelar', options=medida_options)
                 fecha_inicio = st.date_input(label='Fecha Inicio Expediente')
@@ -260,7 +260,7 @@ else :
                 nombre_juicio = st.text_input(label='NombreJuicio')
                 radicacion_options = get_radicacion(create_connection())
                 juzgados_options =  get_juzgados(create_connection())
-                nominacion_radicacion = st.text_input(label="Nominacion Radicacion")
+                # nominacion_radicacion = st.text_input(label="Nominacion Radicacion")
 
                
                 num_expte_admin = st.number_input(label='NumeroExpteAdministrativo', value=0)

@@ -82,8 +82,9 @@ else :
         if len(resultados) > 0:
             df = pd.DataFrame(resultados, columns=["id", "Dni", "NombreJuicio", "NumerodeExpte", "RadicacionJudicial",
                                                    "NumeroOficio", "NumeroExpteAdministrativo", "MedidaCautelar",
-                                                   "AclaracionCautelar", "FechaInicio", "FechaFin", "Observacion",
-                                                   "MontoEmbargo", "Sanciones", "NominacionRadicacion", "Juzgado"])
+                                                   "AclaracionCautelar", "FechaInicioexpediente", "FechaInicioCumplimientoMedida", "Observacion",
+                                                   "MontoEmbargo", "Sanciones", "NominacionRadicacion", "Juzgado", "FechaUltimaNotificacion","FechaProximaNotificacion",
+                                                   "Finalizado"])
             st.dataframe(df)
         else:
             st.write("No se encontraron registros con el DNI especificado.")
@@ -92,8 +93,10 @@ else :
     id = st.text_input("Ingrese el ID del registro que desea actualizar")
     campo = st.selectbox("Seleccione el campo a actualizar", ['NombreJuicio', 'NumerodeExpte', 'RadicacionJudicial',
                                                             'NumeroOficio', 'NumeroExpteAdministrativo', 'MedidaCautelar',
-                                                            'AclaracionCautelar', 'FechaInicio', 'FechaFin', 'Observacion',
-                                                            'Sanciones', 'MontoEmbargo','NominacionRadicacion', 'Juzgado'])
+                                                            'AclaracionCautelar', "FechaInicioexpediente", "FechaInicioCumplimientoMedida", 'Observacion',
+                                                            'Sanciones', 'MontoEmbargo','NominacionRadicacion', 'Juzgado',
+                                                            "FechaUltimaNotificacion","FechaProximaNotificacion",
+                                                            "Finalizado"])
     valor = st.text_input("Ingrese el nuevo valor")
 
     if st.button("Guardar"):
@@ -101,8 +104,10 @@ else :
         ver_modificacion = buscar_por_id(id)
         df = pd.DataFrame(ver_modificacion, columns=["id", "Dni", "NombreJuicio", "NumerodeExpte", "RadicacionJudicial",
                                                    "NumeroOficio", "NumeroExpteAdministrativo", "MedidaCautelar",
-                                                   "AclaracionCautelar", "FechaInicio", "FechaFin", "Observacion",
-                                                   "MontoEmbargo", "Sanciones", "NominacionRadicacion", "Juzgado"])
+                                                   "AclaracionCautelar", "FechaInicioexpediente", "FechaInicioCumplimientoMedida", "Observacion",
+                                                   "MontoEmbargo", "Sanciones", "NominacionRadicacion", "Juzgado",
+                                                   "FechaUltimaNotificacion","FechaProximaNotificacion",
+                                                            "Finalizado"])
         st.dataframe(df)
 
         if registros_actualizados > 0:
