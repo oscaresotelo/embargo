@@ -242,6 +242,7 @@ else :
         radicaciones_data = c.fetchall()
         rad_judicial = st.selectbox("Selecciona una radicación", radicaciones_data, format_func=lambda x: x[0])
 
+
         while True:
             contenedor = st.empty()
             
@@ -285,7 +286,7 @@ else :
                                        NumeroExpteAdministrativo, MedidaCautelar, AclaracionCautelar, FechaInicioexpediente, 
                                        FechaInicioCumplimientoMedida, Observacion, MontoEmbargo, Sanciones, NominacionRadicacion, Juzgado,FechaProximaNotificacion) 
                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)''',
-                                       (dni, nombre_juicio, num_expte, nominacion_radicacion, num_oficio, num_expte_admin,
+                                       (dni, nombre_juicio, num_expte, rad_judicial[0], num_oficio, num_expte_admin,
                                         medida_cautelar, aclaracion_cautelar, fecha_inicio, fecha_fin, observacion,
                                         monto_embargo, nombre_sanciones, rad_judicial[0], juzgado_id[1],fecha_proxima_notificacion))
 
