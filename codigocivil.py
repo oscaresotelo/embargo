@@ -8,7 +8,8 @@ import re
 from duckduckgo_search import DDGS
 from contexto import explicacion
 
-os.environ['_BARD_API_KEY'] = "Zwhlcqb5MVy7fOgi9_KElW4Az1KoLpR-4ZWV1qw3HHERbp1qCxQbY1XspFLqV0VfVf9WUA."
+os.environ['_BARD_API_KEY'] = "ZwhlcqfjRVt_OOxYzM44MzKoEnCfyWnmfpPOe286oKHbCaVYfC05tOvBAJc71LJreIfWlA."
+                               
 
 
 LOGO_IMAGE = "./imagenes/justice.png"
