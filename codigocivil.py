@@ -8,7 +8,7 @@ import re
 from duckduckgo_search import DDGS
 from contexto import explicacion
 
-os.environ['_BARD_API_KEY'] = "ZwhlcqfjRVt_OOxYzM44MzKoEnCfyWnmfpPOe286oKHbCaVYfC05tOvBAJc71LJreIfWlA."
+os.environ['_BARD_API_KEY'] = "Zwhlcok8by9lml4fRGCKLtbKtBXOFFn_MG-l0cFwM_wYGHjtVDunJ36Qroj1dpJ3Ggn8tw."
                                
 
 
